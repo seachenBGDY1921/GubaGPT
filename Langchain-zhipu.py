@@ -7,7 +7,7 @@ from langchain_community.document_loaders import TextLoader
 from langchain.embeddings import HuggingFaceBgeEmbeddings
 from langchain.chains import RetrievalQA
 
-import gradio as gr
+# import gradio as gr
 
 
 # def Pipei(query):
@@ -73,6 +73,6 @@ qa=RetrievalQA.from_chain_type(llm,chain_type="stuff",retriever=store.as_retriev
 response=qa.run(query)
 
 
-demo=gr.ChatInterface(chat)
-
-demo.launch(inbrowser=True)
+# demo=gr.ChatInterface(chat)
+#
+# demo.launch(inbrowser=True)

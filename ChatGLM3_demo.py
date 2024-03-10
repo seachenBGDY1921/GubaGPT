@@ -23,18 +23,26 @@ class ChatGLM3(LLM):
     def _llm_type(self) -> str:
         return "ChatGLM3"
 
-    def load_model(self, model_name_or_path=None):
-        model_config = AutoConfig.from_pretrained(
-            model_name_or_path,
-            trust_remote_code=True
-        )
+    # def load_model(self, model_name_or_path=None):
+    #     model_config = AutoConfig.from_pretrained(
+    #         model_name_or_path,
+    #         trust_remote_code=True
+    #     )
+    #     self.tokenizer = AutoTokenizer.from_pretrained(
+    #         model_name_or_path,
+    #         trust_remote_code=True
+    #     )
+    #     self.model = AutoModel.from_pretrained(
+    #         model_name_or_path, config=model_config, trust_remote_code=True
+    #     ).quantize(4).cuda()
+    def load_model(self,
+                   model_name_or_path: str = "THUDM/chatglm3-6b"):
         self.tokenizer = AutoTokenizer.from_pretrained(
             model_name_or_path,
             trust_remote_code=True
         )
-        self.model = AutoModel.from_pretrained(
-            model_name_or_path, config=model_config, trust_remote_code=True
-        ).quantize(4).cuda()
+        self.model = AutoModel.from_pretrained(model_name_or_path, trust_remote_code=True, device_map="auto").quantize(4).eval()
+
 
     def _tool_history(self, prompt: str):
         ans = []
